@@ -35,7 +35,7 @@ public class StatistikPane extends GridPane {
         pane1.setStyle("-fx-border-color: grey;");
         pane2.setStyle("-fx-border-color: grey;");
         
-        Label label = new Label("Antal lægemidler");
+        Label label = new Label("Antal ordinationer");
         label.setFont(new Font(25));
         this.add(label, 0, 0, 2, 1);
         

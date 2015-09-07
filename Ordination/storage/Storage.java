@@ -7,39 +7,39 @@ import ordination.Laegemiddel;
 import ordination.Patient;
 
 public class Storage {
-	private static List<Patient> patienter = new ArrayList<Patient>();
-	private static List<Laegemiddel> laegemidler = new ArrayList<Laegemiddel>();
+    private static List<Patient> patienter = new ArrayList<Patient>();
+    private static List<Laegemiddel> laegemidler = new ArrayList<Laegemiddel>();
 
-	/**
-	 * Returnerer en liste med alle gemte patienter
-	 */
-	public static List<Patient> getAllPatienter() {
-		return new ArrayList<Patient>(patienter);
-	}
+    /**
+     * Returnerer en liste med alle gemte patienter
+     */
+    public static List<Patient> getAllPatienter() {
+        return new ArrayList<Patient>(patienter);
+    }
 
-	/**
-	 * Gemmer patient
-	 */
-	public static void gemPatient(Patient patient) {
-		if (!patienter.contains(patient)) {
-			patienter.add(patient);
-		}
-	}
+    /**
+     * Gemmer patient
+     */
+    public static void gemPatient(Patient patient) {
+        if (!patienter.contains(patient)) {
+            patienter.add(patient);
+        }
+    }
 
-	/**
-	 * Returnerer en liste med alle gemte lægemidler
-	 */
-	public static List<Laegemiddel> getAllLaegemidler() {
-		return new ArrayList<Laegemiddel>(laegemidler);
-	}
+    /**
+     * Returnerer en liste med alle gemte lægemidler
+     */
+    public static List<Laegemiddel> getAllLaegemidler() {
+        return new ArrayList<Laegemiddel>(laegemidler);
+    }
 
-	/**
-	 * Gemmer lægemiddel 
-	 */
-	public static void gemLaegemiddel(Laegemiddel laegemiddel) {
-		if (!laegemidler.contains(laegemiddel)) {
-			laegemidler.add(laegemiddel);
-		}
-	}
+    /**
+     * Gemmer lægemiddel 
+     */
+    public static void gemLaegemiddel(Laegemiddel laegemiddel) {
+        if (!laegemidler.contains(laegemiddel)) {
+            laegemidler.add(laegemiddel);
+        }
+    }
 
 }

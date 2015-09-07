@@ -24,15 +24,15 @@ public class Laegemiddel {
 		return navn;
 	}
 
-	public double getEnhePrKgPrDoegnLet() {
+	public double getEnhedPrKgPrDoegnLet() {
 		return enhedPrKgPrDoegnLet;
 	}
 	
-	public double getEnhePrKgPrDoegnNormal() {
+	public double getEnhedPrKgPrDoegnNormal() {
 		return enhedPrKgPrDoegnNormal;
 	}
 	
-	public double getEnhePrKgPrDoegnTung() {
+	public double getEnhedPrKgPrDoegnTung() {
 		return enhedPrKgPrDoegnTung;
 	}
 	

@@ -55,19 +55,19 @@ public class Service {
 
     /**
      * Den anbefalede dosis for den pågældende patient (der skal tages
-     * hensyn til patientens vægt) Det er en forskellig enheds faktor
-     * der skal anvendes, den er afhængigt af patientens vægt
+     * hensyn til patientens vægt). Det er en forskellig enheds faktor
+     * der skal anvendes, og den er afhængig af patientens vægt.
      */
     public static double anbefaletDosisPrDoegn(Patient patient, Laegemiddel laegemiddel) {
         double result;
         if (patient.getVaegt() < 25) {
-            result = patient.getVaegt() * laegemiddel.getEnhePrKgPrDoegnLet();
+            result = patient.getVaegt() * laegemiddel.getEnhedPrKgPrDoegnLet();
         }
         else if (patient.getVaegt() > 120) {
-            result = patient.getVaegt() * laegemiddel.getEnhePrKgPrDoegnTung();
+            result = patient.getVaegt() * laegemiddel.getEnhedPrKgPrDoegnTung();
         }
         else {
-            result = patient.getVaegt() * laegemiddel.getEnhePrKgPrDoegnNormal();
+            result = patient.getVaegt() * laegemiddel.getEnhedPrKgPrDoegnNormal();
         }
         return result;
     }
@@ -90,6 +90,10 @@ public class Service {
         return Storage.getAllLaegemidler();
     }
 
+    /**
+     * Metode der kan bruges til at checke at en startDato ligger før en slutDato.
+     * @return true hvis startDato er før slutDato, false ellers.
+     */
     private static boolean checkStartFoerSlut(LocalDate startDato, LocalDate slutDato) {
         boolean result = true;
         if (slutDato.compareTo(startDato) < 0) {

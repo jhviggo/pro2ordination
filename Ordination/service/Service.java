@@ -109,11 +109,11 @@ public class Service {
         Storage.gemPatient(new Patient("Ulla Nielsen", "011064-1522", 59.9));
         Storage.gemPatient(new Patient("Ib Hansen", "090149-2529", 87.7));
 
-        Storage.gemLaegemiddel(new Laegemiddel("Pinex", 0.1, 0.15, 0.16, "Styk"));
+        Storage.gemLaegemiddel(new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk"));
         Storage.gemLaegemiddel(new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml"));
         Storage.gemLaegemiddel(new Laegemiddel("Fucidin", 0.025, 0.025, 0.025,
                 "Styk"));
-        Storage.gemLaegemiddel(new Laegemiddel("ABC", 0.01, 0.015, 0.02, "Styk"));
+        Storage.gemLaegemiddel(new Laegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk"));
 
         opretPNOrdination(LocalDate.of(2015, 1, 1),
                 LocalDate.of(2015, 1, 12), Storage.getAllPatienter().get(0),

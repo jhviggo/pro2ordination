@@ -40,6 +40,8 @@ public class OpretOrdinationDialog extends Stage {
 
 	public OpretOrdinationDialog(Patient patient, Laegemiddel laegemiddel,
 			TypeOrdination type) {
+	    this.service = Service.getService();
+	    
 		this.patient = patient;
 		this.laegemiddel = laegemiddel;
 		this.type = type;

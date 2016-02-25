@@ -124,45 +124,48 @@ public class Service {
 		return result;
 	}
 
-    public void createSomeObjects() {
-        Storage.gemPatient(new Patient("Jane Jensen", "121256-0512", 63.4));
-        Storage.gemPatient(new Patient("Finn Madsen", "070985-1153", 83.2));
-        Storage.gemPatient(new Patient("Hans Jørgensen", "050972-1233", 89.4));
-        Storage.gemPatient(new Patient("Ulla Nielsen", "011064-1522", 59.9));
-        Storage.gemPatient(new Patient("Ib Hansen", "090149-2529", 87.7));
+	public void createSomeObjects() {
+		storage.addPatient(new Patient("Jane Jensen", "121256-0512", 63.4));
+		storage.addPatient(new Patient("Finn Madsen", "070985-1153", 83.2));
+		storage.addPatient(new Patient("Hans Jørgensen", "050972-1233", 89.4));
+		storage.addPatient(new Patient("Ulla Nielsen", "011064-1522", 59.9));
+		storage.addPatient(new Patient("Ib Hansen", "090149-2529", 87.7));
 
-        Storage.gemLaegemiddel(new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk"));
-        Storage.gemLaegemiddel(new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml"));
-        Storage.gemLaegemiddel(new Laegemiddel("Fucidin", 0.025, 0.025, 0.025,
-                "Styk"));
-        Storage.gemLaegemiddel(new Laegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk"));
+		storage.addLaegemiddel(new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15,
+				0.16, "Styk"));
+		storage.addLaegemiddel(new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml"));
+		storage.addLaegemiddel(new Laegemiddel("Fucidin", 0.025, 0.025, 0.025,
+				"Styk"));
+		storage.addLaegemiddel(new Laegemiddel("Methotrexat", 0.01, 0.015,
+				0.02, "Styk"));
 
-        opretPNOrdination(LocalDate.of(2015, 1, 1),
-                LocalDate.of(2015, 1, 12), Storage.getAllPatienter().get(0),
-                Storage.getAllLaegemidler().get(1), 123);
+		opretPNOrdination(LocalDate.of(2015, 1, 1), LocalDate.of(2015, 1, 12),
+				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
+						.get(1), 123);
 
-        opretPNOrdination(LocalDate.of(2015, 2, 12),
-                LocalDate.of(2015, 2, 14), Storage.getAllPatienter().get(0),
-                Storage.getAllLaegemidler().get(0), 3);
+		opretPNOrdination(LocalDate.of(2015, 2, 12), LocalDate.of(2015, 2, 14),
+				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
+						.get(0), 3);
 
-        opretPNOrdination(LocalDate.of(2015, 1, 20),
-                LocalDate.of(2015, 1, 25), Storage.getAllPatienter().get(3),
-                Storage.getAllLaegemidler().get(2), 5);
+		opretPNOrdination(LocalDate.of(2015, 1, 20), LocalDate.of(2015, 1, 25),
+				storage.getAllPatienter().get(3), storage.getAllLaegemidler()
+						.get(2), 5);
 
-        opretPNOrdination(LocalDate.of(2015, 1, 1),
-                LocalDate.of(2015, 1, 12), Storage.getAllPatienter().get(0),
-                Storage.getAllLaegemidler().get(1), 123);
+		opretPNOrdination(LocalDate.of(2015, 1, 1), LocalDate.of(2015, 1, 12),
+				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
+						.get(1), 123);
 
-        opretDagligFastOrdination(LocalDate.of(2015, 1, 10),
-                LocalDate.of(2015, 1, 12), Storage.getAllPatienter().get(1),
-                Storage.getAllLaegemidler().get(1), 2, -1, 1, -1);
+		opretDagligFastOrdination(LocalDate.of(2015, 1, 10),
+				LocalDate.of(2015, 1, 12), storage.getAllPatienter().get(1),
+				storage.getAllLaegemidler().get(1), 2, -1, 1, -1);
 
-        LocalTime[] kl = { LocalTime.of(12, 0), LocalTime.of(12, 40), LocalTime.of(16, 0), LocalTime.of(18, 45) };
-        double[] an = { 0.5, 1, 2.5, 3 };
+		LocalTime[] kl = { LocalTime.of(12, 0), LocalTime.of(12, 40),
+				LocalTime.of(16, 0), LocalTime.of(18, 45) };
+		double[] an = { 0.5, 1, 2.5, 3 };
 
-        opretDagligSkaevOrdination(LocalDate.of(2015, 1, 23),
-                LocalDate.of(2015, 1, 24), Storage.getAllPatienter().get(1),
-                Storage.getAllLaegemidler().get(2), kl, an);
-    }
+		opretDagligSkaevOrdination(LocalDate.of(2015, 1, 23),
+				LocalDate.of(2015, 1, 24), storage.getAllPatienter().get(1),
+				storage.getAllLaegemidler().get(2), kl, an);
+	}
 
 }

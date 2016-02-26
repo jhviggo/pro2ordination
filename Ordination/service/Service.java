@@ -124,36 +124,48 @@ public class Service {
 		return result;
 	}
 
-	public void createSomeObjects() {
-		storage.addPatient(new Patient("Jane Jensen", "121256-0512", 63.4));
-		storage.addPatient(new Patient("Finn Madsen", "070985-1153", 83.2));
-		storage.addPatient(new Patient("Hans Jørgensen", "050972-1233", 89.4));
-		storage.addPatient(new Patient("Ulla Nielsen", "011064-1522", 59.9));
-		storage.addPatient(new Patient("Ib Hansen", "090149-2529", 87.7));
+	public Patient opretPatient(String navn, String cpr, double vaegt) {
+		Patient p = new Patient(navn, cpr, vaegt);
+		storage.addPatient(p);
+		return p;
+	}
 
-		storage.addLaegemiddel(new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15,
-				0.16, "Styk"));
-		storage.addLaegemiddel(new Laegemiddel("Paracetamol", 1, 1.5, 2, "Ml"));
-		storage.addLaegemiddel(new Laegemiddel("Fucidin", 0.025, 0.025, 0.025,
-				"Styk"));
-		storage.addLaegemiddel(new Laegemiddel("Methotrexat", 0.01, 0.015,
-				0.02, "Styk"));
+	public Laegemiddel opretLaegemiddel(String navn,
+			double enhedPrKgPrDoegnLet, double enhedPrKgPrDoegnNormal,
+			double enhedPrKgPrDoegnTung, String enhed) {
+		Laegemiddel lm = new Laegemiddel(navn, enhedPrKgPrDoegnLet,
+				enhedPrKgPrDoegnNormal, enhedPrKgPrDoegnTung, enhed);
+		storage.addLaegemiddel(lm);
+		return lm;
+	}
+
+	public void createSomeObjects() {
+		opretPatient("Jane Jensen", "121256-0512", 63.4);
+		opretPatient("Finn Madsen", "070985-1153", 83.2);
+		opretPatient("Hans Jørgensen", "050972-1233", 89.4);
+		opretPatient("Ulla Nielsen", "011064-1522", 59.9);
+		opretPatient("Ib Hansen", "090149-2529", 87.7);
+
+		opretLaegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
+		opretLaegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
+		opretLaegemiddel("Fucidin", 0.025, 0.025, 0.025, "Styk");
+		opretLaegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk");
 
 		opretPNOrdination(LocalDate.of(2015, 1, 1), LocalDate.of(2015, 1, 12),
 				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
-						.get(1), 123);
+				.get(1), 123);
 
 		opretPNOrdination(LocalDate.of(2015, 2, 12), LocalDate.of(2015, 2, 14),
 				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
-						.get(0), 3);
+				.get(0), 3);
 
 		opretPNOrdination(LocalDate.of(2015, 1, 20), LocalDate.of(2015, 1, 25),
 				storage.getAllPatienter().get(3), storage.getAllLaegemidler()
-						.get(2), 5);
+				.get(2), 5);
 
 		opretPNOrdination(LocalDate.of(2015, 1, 1), LocalDate.of(2015, 1, 12),
 				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
-						.get(1), 123);
+				.get(1), 123);
 
 		opretDagligFastOrdination(LocalDate.of(2015, 1, 10),
 				LocalDate.of(2015, 1, 12), storage.getAllPatienter().get(1),

@@ -2,6 +2,7 @@ package gui;
 
 import java.time.LocalTime;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,7 +18,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ordination.Laegemiddel;
 import ordination.Patient;
-import service.Service;
 
 public class OpretOrdinationDialog extends Stage {
 
@@ -36,11 +36,11 @@ public class OpretOrdinationDialog extends Stage {
 	private DagligFastPane dagligFastPane;
 	private DagligSkaevPane dagligSkaevPane;
 
-	private Service service;
+	private Controller controller;
 
 	public OpretOrdinationDialog(Patient patient, Laegemiddel laegemiddel,
 			TypeOrdination type) {
-	    this.service = Service.getService();
+	    this.controller = Controller.getController();
 	    
 		this.patient = patient;
 		this.laegemiddel = laegemiddel;
@@ -74,7 +74,7 @@ public class OpretOrdinationDialog extends Stage {
 
 		pane.add(new Label("Anbefalet antal enheder pr døgn "), 0, 4);
 		String antal = String.format("%.2f",
-				service.anbefaletDosisPrDoegn(patient, laegemiddel))
+				controller.anbefaletDosisPrDoegn(patient, laegemiddel))
 				+ laegemiddel.getEnhed();
 		pane.add(new Label(antal), 1, 4);
 
@@ -123,7 +123,7 @@ public class OpretOrdinationDialog extends Stage {
 				lblError.setText("Dosis skal være et positivt tal");
 			}
 			try {
-				service.opretPNOrdination(startDato.getValue(),
+				controller.opretPNOrdination(startDato.getValue(),
 						slutDato.getValue(), patient, laegemiddel, dose);
 			} catch (IllegalArgumentException e) {
 				lblError.setText(e.getMessage());
@@ -147,7 +147,7 @@ public class OpretOrdinationDialog extends Stage {
 			parseField(dagligFastPane.getAften(), doser, 2);
 			parseField(dagligFastPane.getNat(), doser, 3);
 
-			service.opretDagligFastOrdination(startDato.getValue(),
+			controller.opretDagligFastOrdination(startDato.getValue(),
 					slutDato.getValue(), patient, laegemiddel, doser[0],
 					doser[1], doser[2], doser[3]);
 		} catch (IllegalArgumentException e) {
@@ -178,7 +178,7 @@ public class OpretOrdinationDialog extends Stage {
 
 		String[] doser = dagligSkaevPane.getDosisArray();
 		try {
-			service.opretDagligSkaevOrdination(startDato.getValue(),
+			controller.opretDagligSkaevOrdination(startDato.getValue(),
 					slutDato.getValue(), patient, laegemiddel,
 					makeKlokkeSlet(doser), makeAntal(doser));
 		} catch (IllegalArgumentException e) {

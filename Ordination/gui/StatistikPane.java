@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -7,17 +8,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import ordination.Laegemiddel;
-import service.Service;
 
 public class StatistikPane extends GridPane {
 	private TextField ordinationerPerVægtPerLægemiddel = new TextField();
 	private TextField txfVægtFra = new TextField();
 	private TextField txfVægtTil = new TextField();
 	private ComboBox<Laegemiddel> lstLægemidler = new ComboBox<Laegemiddel>();
-	private Service service;
+	private Controller controller;
 
 	public StatistikPane() {
-		service = Service.getService();
+		controller = Controller.getController();
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
 		this.setVgap(10);
@@ -51,7 +51,7 @@ public class StatistikPane extends GridPane {
 		pane1.add(new Label("Vægt til: "), 0, 1);
 		pane1.add(txfVægtTil, 1, 1);
 
-		lstLægemidler.getItems().setAll(service.getAllLaegemidler());
+		lstLægemidler.getItems().setAll(controller.getAllLaegemidler());
 		pane1.add(new Label("Lægemiddel: "), 0, 2);
 		pane1.add(lstLægemidler, 1, 2);
 		this.add(pane1, 0, 1);
@@ -75,7 +75,7 @@ public class StatistikPane extends GridPane {
 			int vTil = Integer.valueOf(txfVægtTil.getText());
 			Laegemiddel lægemiddel = lstLægemidler.getSelectionModel()
 					.getSelectedItem();
-			int antal = service.antalOrdinationerPrVægtPrLægemiddel(vFra, vTil,
+			int antal = controller.antalOrdinationerPrVægtPrLægemiddel(vFra, vTil,
 					lægemiddel);
 			ordinationerPerVægtPerLægemiddel.setText(antal + "");
 		} catch (NumberFormatException e) {

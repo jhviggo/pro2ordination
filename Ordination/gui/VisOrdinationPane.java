@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -9,17 +10,16 @@ import ordination.DagligSkaev;
 import ordination.Ordination;
 import ordination.PN;
 import ordination.Patient;
-import service.Service;
 
 public class VisOrdinationPane extends GridPane {
 	private ListView<Patient> lstPatient = new ListView<>();
 	private ListView<Ordination> lstOrdination = new ListView<>();
 	private OrdinationDetailsPane ordinationDetailsPane = new OrdinationDetailsPane();
 
-	private Service service;
+	private Controller controller;
 
 	public VisOrdinationPane() {
-		service = Service.getService();
+		controller = Controller.getController();
 
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
@@ -28,7 +28,7 @@ public class VisOrdinationPane extends GridPane {
 
 		this.add(new Label("Vælg patient"), 0, 0);
 		this.add(lstPatient, 0, 1);
-		lstPatient.getItems().setAll(service.getAllPatienter());
+		lstPatient.getItems().setAll(controller.getAllPatienter());
 		lstPatient
 				.getSelectionModel()
 				.selectedIndexProperty()

@@ -1,4 +1,4 @@
-package service;
+package controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,23 +11,23 @@ import ordination.PN;
 import ordination.Patient;
 import storage.Storage;
 
-public class Service {
+public class Controller {
     private Storage storage;
-    private static Service service;
+    private static Controller controller;
     
-    private Service() {
+    private Controller() {
         storage = new Storage();
     }
     
-    public static Service getService() {
-        if (service == null) {
-            service = new Service();
+    public static Controller getController() {
+        if (controller == null) {
+            controller = new Controller();
         }
-        return service;
+        return controller;
     }
     
-    public static Service getTestService() {
-        return new Service();
+    public static Controller getTestController() {
+        return new Controller();
     }
     
     /**
@@ -161,36 +161,36 @@ public class Service {
         opretLaegemiddel("Fucidin", 0.025, 0.025, 0.025, "Styk");
         opretLaegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk");
         
-        opretPNOrdination(LocalDate.of(2015, 1, 1), LocalDate.of(2015, 1, 12),
+        opretPNOrdination(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 12),
             storage.getAllPatienter().get(0), storage.getAllLaegemidler()
                 .get(1),
             123);
         
-        opretPNOrdination(LocalDate.of(2015, 2, 12), LocalDate.of(2015, 2, 14),
+        opretPNOrdination(LocalDate.of(2019, 2, 12), LocalDate.of(2019, 2, 14),
             storage.getAllPatienter().get(0), storage.getAllLaegemidler()
                 .get(0),
             3);
         
-        opretPNOrdination(LocalDate.of(2015, 1, 20), LocalDate.of(2015, 1, 25),
+        opretPNOrdination(LocalDate.of(2019, 1, 20), LocalDate.of(2019, 1, 25),
             storage.getAllPatienter().get(3), storage.getAllLaegemidler()
                 .get(2),
             5);
         
-        opretPNOrdination(LocalDate.of(2015, 1, 1), LocalDate.of(2015, 1, 12),
+        opretPNOrdination(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 12),
             storage.getAllPatienter().get(0), storage.getAllLaegemidler()
                 .get(1),
             123);
         
-        opretDagligFastOrdination(LocalDate.of(2015, 1, 10),
-            LocalDate.of(2015, 1, 12), storage.getAllPatienter().get(1),
+        opretDagligFastOrdination(LocalDate.of(2019, 1, 10),
+            LocalDate.of(2019, 1, 12), storage.getAllPatienter().get(1),
             storage.getAllLaegemidler().get(1), 2, -1, 1, -1);
         
         LocalTime[] kl = { LocalTime.of(12, 0), LocalTime.of(12, 40),
             LocalTime.of(16, 0), LocalTime.of(18, 45) };
         double[] an = { 0.5, 1, 2.5, 3 };
         
-        opretDagligSkaevOrdination(LocalDate.of(2015, 1, 23),
-            LocalDate.of(2015, 1, 24), storage.getAllPatienter().get(1),
+        opretDagligSkaevOrdination(LocalDate.of(2019, 1, 23),
+            LocalDate.of(2019, 1, 24), storage.getAllPatienter().get(1),
             storage.getAllLaegemidler().get(2), kl, an);
     }
     

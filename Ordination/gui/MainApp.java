@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
@@ -7,10 +8,9 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import service.Service;
 
 public class MainApp extends Application {
-	private Service service;
+	private Controller controller;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -18,8 +18,8 @@ public class MainApp extends Application {
 
 	@Override
 	public void init() {
-		service = Service.getService();
-		service.createSomeObjects();
+		controller = Controller.getController();
+		controller.createSomeObjects();
 	}
 
 	@Override

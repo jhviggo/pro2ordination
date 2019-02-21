@@ -2,6 +2,7 @@ package gui;
 
 import java.time.LocalDate;
 
+import controller.Controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -13,7 +14,6 @@ import ordination.DagligSkaev;
 import ordination.Dosis;
 import ordination.Ordination;
 import ordination.PN;
-import service.Service;
 
 public class OrdinationDetailsPane extends GridPane {
     private TextField txtStarttid, txtSluttid, txtLaegemiddel, txtDoegndosis,
@@ -36,10 +36,10 @@ public class OrdinationDetailsPane extends GridPane {
 
     private Label lblError = new Label();
 
-    private Service service;
+    private Controller controller;
 
     public OrdinationDetailsPane() {
-        service = Service.getService();
+        controller = Controller.getController();
         setHgap(20);
         setVgap(10);
         setGridLinesVisible(false);
@@ -100,7 +100,7 @@ public class OrdinationDetailsPane extends GridPane {
         lblError.setText("");
         LocalDate anvendtDato = datePicker.getValue();
         try {
-            service.ordinationPNAnvendt(pn, anvendtDato);
+            controller.ordinationPNAnvendt(pn, anvendtDato);
         }
         catch (IllegalArgumentException e) {
             lblError.setText(e.getMessage());

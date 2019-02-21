@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -12,7 +13,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import ordination.Laegemiddel;
 import ordination.Patient;
-import service.Service;
 
 public class OpretOrdinationPane extends GridPane {
 
@@ -25,11 +25,11 @@ public class OpretOrdinationPane extends GridPane {
 	private Button btnOpret = new Button("Opret ordination");
 	private Label lblError;
 
-	private Service service;
+	private Controller controller;
 
 	public OpretOrdinationPane() {
 
-		service = Service.getService();
+		controller = Controller.getController();
 
 		this.setPadding(new Insets(20));
 		this.setHgap(20);
@@ -48,11 +48,11 @@ public class OpretOrdinationPane extends GridPane {
 
 		this.add(new Label("Vælg patient"), 0, 0);
 		this.add(lstPatient, 0, 1, 1, 2);
-		lstPatient.getItems().setAll(service.getAllPatienter());
+		lstPatient.getItems().setAll(controller.getAllPatienter());
 
 		this.add(new Label("Vælg lægemiddel"), 1, 0);
 		this.add(lstLaegemiddel, 1, 1, 1, 2);
-		lstLaegemiddel.getItems().setAll(service.getAllLaegemidler());
+		lstLaegemiddel.getItems().setAll(controller.getAllLaegemidler());
 
 		this.add(new Label("Vælg ordination"), 2, 0);
 		GridPane innerPane = new GridPane();

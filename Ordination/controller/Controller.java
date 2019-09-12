@@ -4,32 +4,28 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import ordination.DagligFast;
-import ordination.DagligSkaev;
-import ordination.Laegemiddel;
-import ordination.PN;
-import ordination.Patient;
+import ordination.*;
 import storage.Storage;
 
 public class Controller {
     private Storage storage;
     private static Controller controller;
-    
+
     private Controller() {
         storage = new Storage();
     }
-    
+
     public static Controller getController() {
         if (controller == null) {
             controller = new Controller();
         }
         return controller;
     }
-    
+
     public static Controller getTestController() {
         return new Controller();
     }
-    
+
     /**
      * Hvis startDato er efter slutDato kastes en IllegalArgumentException og
      * ordinationen oprettes ikke
@@ -39,10 +35,17 @@ public class Controller {
      */
     public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
         Patient patient, Laegemiddel laegemiddel, double antal) {
-        // TODO
-        return null;
+
+        if (!this.checkStartFoerSlut(startDen, slutDen)) {
+            throw new IllegalArgumentException("Slutdatoen må ikke komme før startdatoen");
+        }
+
+        PN ordination = new PN(startDen, slutDen, laegemiddel, antal);
+        patient.addOrdination(ordination);
+
+        return ordination;
     }
-    
+
     /**
      * Opretter og returnerer en DagligFast ordination. Hvis startDato er efter
      * slutDato kastes en IllegalArgumentException og ordinationen oprettes ikke
@@ -52,10 +55,18 @@ public class Controller {
         LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
         double morgenAntal, double middagAntal, double aftenAntal,
         double natAntal) {
-        // TODO
-        return null;
+
+        if (!this.checkStartFoerSlut(startDen, slutDen)) {
+            throw new IllegalArgumentException("Slutdatoen må ikke komme før startdatoen");
+        }
+
+        DagligFast ordination = new DagligFast(startDen, slutDen, laegemiddel);
+        ordination.addDosis(morgenAntal, middagAntal, aftenAntal, natAntal);
+        patient.addOrdination(ordination);
+
+        return ordination;
     }
-    
+
     /**
      * Opretter og returnerer en DagligSkæv ordination. Hvis startDato er efter
      * slutDato kastes en IllegalArgumentException og ordinationen oprettes ikke.
@@ -66,10 +77,22 @@ public class Controller {
     public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
         LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
         LocalTime[] klokkeSlet, double[] antalEnheder) {
-        // TODO
-        return null;
+
+        if (!this.checkStartFoerSlut(startDen, slutDen)) {
+            throw new IllegalArgumentException("Slutdatoen må ikke komme før startdatoen");
+        }
+
+        if (klokkeSlet.length != antalEnheder.length) {
+            throw new IllegalArgumentException("Antal klokkeslæt og antal enheder skal have samme");
+        }
+
+        DagligSkaev ordination = new DagligSkaev(startDen, slutDen, laegemiddel);
+        ordination.opretDosis(klokkeSlet, antalEnheder);
+        patient.addOrdination(ordination);
+
+        return ordination;
     }
-    
+
     /**
      * En dato for hvornår ordinationen anvendes tilføjes ordinationen. Hvis
      * datoen ikke er indenfor ordinationens gyldighedsperiode kastes en
@@ -77,9 +100,12 @@ public class Controller {
      * Pre: ordination og dato er ikke null
      */
     public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
-        // TODO
+        if(!this.checkStartFoerSlut(ordination.getStartDen(), dato) || !this.checkStartFoerSlut(dato, ordination.getSlutDen())) {
+            throw new IllegalArgumentException("Den valgte andvendelse er uden for ordinationens gyldighedsperiode");
+        }
+        ordination.givDosis(dato);
     }
-    
+
     /**
      * Den anbefalede dosis for den pågældende patient (der skal tages hensyn
      * til patientens vægt). Det er en forskellig enheds faktor der skal
@@ -100,7 +126,7 @@ public class Controller {
         }
         return result;
     }
-    
+
     /**
      * For et givent vægtinterval og et givent lægemiddel, hentes antallet af
      * ordinationer.
@@ -108,18 +134,27 @@ public class Controller {
      */
     public int antalOrdinationerPrVægtPrLægemiddel(double vægtStart,
         double vægtSlut, Laegemiddel laegemiddel) {
-        // TODO
-        return 0;
+        int sum = 0;
+        for (Patient p : getAllPatienter()) {
+            if (vægtStart <= p.getVaegt() && p.getVaegt() <= vægtSlut) {
+                for (Ordination o : p.getOrdinationer()) {
+                    if (o.getLaegemiddel().equals(laegemiddel)) {
+                        sum++;
+                    }
+                }
+            }
+        }
+        return sum;
     }
-    
+
     public List<Patient> getAllPatienter() {
         return storage.getAllPatienter();
     }
-    
+
     public List<Laegemiddel> getAllLaegemidler() {
         return storage.getAllLaegemidler();
     }
-    
+
     /**
      * Metode der kan bruges til at checke at en startDato ligger før en
      * slutDato.
@@ -133,13 +168,13 @@ public class Controller {
         }
         return result;
     }
-    
+
     public Patient opretPatient(String cpr, String navn, double vaegt) {
         Patient p = new Patient(cpr, navn, vaegt);
         storage.addPatient(p);
         return p;
     }
-    
+
     public Laegemiddel opretLaegemiddel(String navn,
         double enhedPrKgPrDoegnLet, double enhedPrKgPrDoegnNormal,
         double enhedPrKgPrDoegnTung, String enhed) {
@@ -148,50 +183,50 @@ public class Controller {
         storage.addLaegemiddel(lm);
         return lm;
     }
-    
+
     public void createSomeObjects() {
         opretPatient("121256-0512", "Jane Jensen", 63.4);
         opretPatient("070985-1153", "Finn Madsen", 83.2);
         opretPatient("050972-1233", "Hans Jørgensen", 89.4);
         opretPatient("011064-1522", "Ulla Nielsen", 59.9);
         opretPatient("090149-2529", "Ib Hansen", 87.7);
-        
+
         opretLaegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
         opretLaegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
         opretLaegemiddel("Fucidin", 0.025, 0.025, 0.025, "Styk");
         opretLaegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk");
-        
+
         opretPNOrdination(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 12),
             storage.getAllPatienter().get(0), storage.getAllLaegemidler()
                 .get(1),
             123);
-        
+
         opretPNOrdination(LocalDate.of(2019, 2, 12), LocalDate.of(2019, 2, 14),
             storage.getAllPatienter().get(0), storage.getAllLaegemidler()
                 .get(0),
             3);
-        
+
         opretPNOrdination(LocalDate.of(2019, 1, 20), LocalDate.of(2019, 1, 25),
             storage.getAllPatienter().get(3), storage.getAllLaegemidler()
                 .get(2),
             5);
-        
+
         opretPNOrdination(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 12),
             storage.getAllPatienter().get(0), storage.getAllLaegemidler()
                 .get(1),
             123);
-        
+
         opretDagligFastOrdination(LocalDate.of(2019, 1, 10),
             LocalDate.of(2019, 1, 12), storage.getAllPatienter().get(1),
             storage.getAllLaegemidler().get(1), 2, -1, 1, -1);
-        
+
         LocalTime[] kl = { LocalTime.of(12, 0), LocalTime.of(12, 40),
             LocalTime.of(16, 0), LocalTime.of(18, 45) };
         double[] an = { 0.5, 1, 2.5, 3 };
-        
+
         opretDagligSkaevOrdination(LocalDate.of(2019, 1, 23),
             LocalDate.of(2019, 1, 24), storage.getAllPatienter().get(1),
             storage.getAllLaegemidler().get(2), kl, an);
     }
-    
+
 }

@@ -36,6 +36,10 @@ public class PN extends Ordination{
         return samletDosis() / days;
     }
 
+    public ArrayList<LocalDate> getDoser() {
+        return new ArrayList<>(doser);
+    }
+
     @Override
     public String getType() {
         return "PN";

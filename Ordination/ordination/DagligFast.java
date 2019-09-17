@@ -32,7 +32,7 @@ public class DagligFast extends Ordination {
     public double samletDosis() {
         int days = (int) ChronoUnit.DAYS.between(this.getStartDen(), this.getSlutDen()) + 1;
         return this.doegnDosis() * days;
-    };
+    }
 
     public double doegnDosis() {
         int antalDoser = 0;
@@ -42,7 +42,7 @@ public class DagligFast extends Ordination {
             }
         }
         return antalDoser;
-    };
+    }
 
     public String getType() {
         return "DagligtFast";

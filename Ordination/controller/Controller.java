@@ -99,11 +99,11 @@ public class Controller {
      * IllegalArgumentException
      * Pre: ordination og dato er ikke null
      */
-    public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
+    public boolean ordinationPNAnvendt(PN ordination, LocalDate dato) {
         if(!this.checkStartFoerSlut(ordination.getStartDen(), dato) || !this.checkStartFoerSlut(dato, ordination.getSlutDen())) {
             throw new IllegalArgumentException("Den valgte andvendelse er uden for ordinationens gyldighedsperiode");
         }
-        ordination.givDosis(dato);
+        return ordination.givDosis(dato);
     }
 
     /**
